@@ -1,36 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { followActionCreater, unfollowActionCreater, setUsersActionCreater, setActivePageActionCreater, 
-         setNumberOfUsersOnServerActionCreater, changeIsLoadingActionCreater } from '../../Redax/usersReduser'
+         setNumberOfUsersOnServerActionCreater, changeIsLoadingActionCreater,getUsersThunkCreator, 
+         setActivePageOfNumbersOnPageAC } from '../../Redax/usersReduser'
 import Users from './Users';
 import Preloader from '../common/Preloader';
-import {getUsersThunkCreator} from '../../Redax/usersReduser';
-import {usersAPI} from '../../api/api';
  
 class UsersAPIContainer extends React.Component {
     componentDidMount(){
         this.props.getUsersThunkCreator(this.props.activePage, this.props.numberOfUsersOnPage)
     }
     onSpanClick = (page) => {
-        this.props.changeIsLoading(true);
         this.props.setActivePage(page);
-        usersAPI.getUsers(page, this.props.numberOfUsersOnPage)
-        .then(response => {
-            this.props.changeIsLoading(false);
-            this.props.setUsers(response.items);
-            this.props.setNumberOfUsersOnServer(response.totalCount);
-        })
+        this.props.getUsersThunkCreator(this.props.activePage, this.props.numberOfUsersOnPage)
+    }
+    onSpanClick2 = () => {
+        this.props.setActivePageOfNumbersOnPageAC();
     }
     render() {
         return (<>{this.props.isLoading ? <Preloader /> : null}
-        <Users numberOfUsersOnServer = {this.props.numberOfUsersOnServer}
-                      numberOfUsersOnPage = {this.props.numberOfUsersOnPage}
-                      activePage = {this.props.activePage}
-                      onSpanClick = {this.onSpanClick}
-                      users = {this.props.users}
-                      unfollow = {this.props.unfollow}
-                      follow = {this.props.follow}/>
-                </>
+        <Users {...this.props} onSpanClick = {this.onSpanClick} onSpanClick2 = {this.onSpanClick2}/>
+            </>
         )
     }
     
@@ -43,7 +33,9 @@ const mapStateToProps = (state) => {
         numberOfUsersOnServer: state.userPage.numberOfUsersOnServer,
         numberOfUsersOnPage: state.userPage.numberOfUsersOnPage,
         activePage: state.userPage.activePage,
-        isLoading: state.userPage.isLoading
+        isLoading: state.userPage.isLoading,
+        activePageOfNumbersOnPage: state.userPage.activePageOfNumbersOnPage,
+        numberOfNumbersOnPage: state.userPage.numberOfNumbersOnPage
     }
 }
 
@@ -77,7 +69,8 @@ const UsersContainer = connect(mapStateToProps, {
     setActivePage: setActivePageActionCreater,
     setNumberOfUsersOnServer: setNumberOfUsersOnServerActionCreater,
     changeIsLoading: changeIsLoadingActionCreater,
-    getUsersThunkCreator: getUsersThunkCreator
+    getUsersThunkCreator: getUsersThunkCreator,
+    setActivePageOfNumbersOnPageAC: setActivePageOfNumbersOnPageAC
 })(UsersAPIContainer);
 
 export default UsersContainer;

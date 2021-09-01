@@ -6,15 +6,19 @@ const SET_USERS = 'SET-USERS'
 const SET_ACTIVE_PAGE = 'SET-ACTIVE-PAGE';
 const SET_NUMBER_OF_USERS_ON_SERVER = 'SET-NUMBER-OF-USERS-ON_SERVER'
 const CHANGE_IS_LOADING = 'CHANGE-IS-LOADING'
+const SET_ACTIVE_PAGE_OF_NUMBERS_ON_PAGE = 'SET-ACTIVE-PAGE-OF-NUMBERS-ON-PAGE';
 
-const numberOfUsersOnPage = 3;
+const numberOfUsersOnPage = 10;
+const numberOfNumbersOnPage = 40;
 
 const initialState = {
     users: [],
     numberOfUsersOnServer: 0,
     numberOfUsersOnPage: numberOfUsersOnPage,
     activePage: 1,
-    isLoading: true
+    isLoading: true,
+    activePageOfNumbersOnPage: 1,
+    numberOfNumbersOnPage: numberOfNumbersOnPage
 }
 
 const usersReduser = (state = initialState, action) => {
@@ -47,6 +51,8 @@ const usersReduser = (state = initialState, action) => {
             return {...state, numberOfUsersOnServer: action.numberOfUsersOnServer}
         case CHANGE_IS_LOADING:
             return {...state, isLoading: action.isLoading}
+        case SET_ACTIVE_PAGE_OF_NUMBERS_ON_PAGE:
+            return {...state, activePageOfNumbersOnPage: ++state.activePageOfNumbersOnPage}
         default:
             return state;
     }
@@ -80,6 +86,10 @@ export const setNumberOfUsersOnServerActionCreater = (numberOfUsersOnServer) => 
 export const changeIsLoadingActionCreater = (isLoading) => ({
     type: CHANGE_IS_LOADING,
     isLoading
+})
+
+export const setActivePageOfNumbersOnPageAC = () => ({
+    type: SET_ACTIVE_PAGE_OF_NUMBERS_ON_PAGE
 })
 
 export const getUsersThunkCreator = (activePage, numberOfUsersOnPage) => {
