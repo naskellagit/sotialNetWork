@@ -1,0 +1,14 @@
+
+img{
+    width: 300px;
+}
+.flexElem{
+    display: flex;
+    justify-content: space-between;
+}
+.key{
+    color: dimgrey;
+}
+li{
+    list-style-type: none;
+}

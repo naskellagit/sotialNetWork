@@ -1,0 +1,14 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    padding: 10px;
+}
+.wrapper img{
+    width: 200px;
+}
+.selected{
+    font-weight: bold;
+}
+.cursor{
+    cursor: pointer;
+}
