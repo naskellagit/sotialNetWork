@@ -4,12 +4,11 @@ import { followActionCreater, unfollowActionCreater, setUsersActionCreater, setA
          setNumberOfUsersOnServerActionCreater, changeIsLoadingActionCreater } from '../../Redax/usersReduser'
 import Users from './Users';
 import Preloader from '../common/Preloader';
-import getUsersThunkCreator from '../../Redax/usersReduser';
+import {getUsersThunkCreator} from '../../Redax/usersReduser';
 import {usersAPI} from '../../api/api';
  
 class UsersAPIContainer extends React.Component {
     componentDidMount(){
-
         this.props.getUsersThunkCreator(this.props.activePage, this.props.numberOfUsersOnPage)
     }
     onSpanClick = (page) => {
